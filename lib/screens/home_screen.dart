@@ -1,0 +1,43 @@
+import 'package:flutter/material.dart';
+import 'package:watty_clone/screens/main_screen.dart';
+import 'package:watty_clone/screens/mypage_screen.dart';
+import 'package:watty_clone/shared/bottom_navi.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late int index;
+
+  @override
+  void initState() {
+    super.initState();
+    index = 0;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: BottomNavi(
+        onTap: (newIndex) {
+          setState(() {
+            index = newIndex;
+          });
+        },
+      ),
+      body: IndexedStack(
+        index: index,
+        children: const [
+          MainScreen(),
+          MainScreen(),
+          MainScreen(),
+          MyPage(),
+        ],
+      ),
+    );
+  }
+}
