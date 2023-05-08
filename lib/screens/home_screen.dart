@@ -35,11 +35,11 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: IndexedStack(
         index: index,
-        children: [
-          const MainScreen(),
+        children: const [
+          MainScreen(),
           RecordScreen(),
-          const MainScreen(),
-          const MyPage(),
+          MainScreen(),
+          MyPage(),
         ],
       ),
     );

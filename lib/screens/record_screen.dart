@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class RecordScreen extends StatelessWidget {
-  RecordScreen({super.key});
+class RecordScreen extends StatefulWidget {
+  const RecordScreen({super.key});
 
+  @override
+  State<RecordScreen> createState() => _RecordScreenState();
+}
+
+class _RecordScreenState extends State<RecordScreen> {
   // dummy items
   final List<Map<String, dynamic>> _items2 = [
     {
@@ -77,46 +82,54 @@ class RecordScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MasonryGridView.count(
-      itemCount: _items2.length,
-      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
-      crossAxisCount: 2,
-      mainAxisSpacing: 4,
-      crossAxisSpacing: 4,
-      itemBuilder: (context, index) {
-        return Card(
-          key: ValueKey(_items2[index]['id']),
-          child: SizedBox(
-            height: 220.0, // _items[index]['height'],
-            child: Container(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  FadeInImage.memoryNetwork(
-                    placeholder: kTransparentImage,
-                    image: _items2[index]['image'],
-                    height: 150,
-                    fit: BoxFit.cover,
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Container(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      _items2[index]['title'],
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
+    // 새로고침
+    return RefreshIndicator(
+      onRefresh: () async {
+        setState(() {
+          _items2.add(_items2[0]);
+        });
+      },
+      child: MasonryGridView.count(
+        itemCount: _items2.length,
+        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+        crossAxisCount: 2,
+        mainAxisSpacing: 4,
+        crossAxisSpacing: 4,
+        itemBuilder: (context, index) {
+          return Card(
+            key: ValueKey(_items2[index]['id']),
+            child: SizedBox(
+              height: 220.0, // _items[index]['height'],
+              child: Container(
+                padding: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    FadeInImage.memoryNetwork(
+                      placeholder: kTransparentImage,
+                      image: _items2[index]['image'],
+                      height: 150,
+                      fit: BoxFit.cover,
                     ),
-                  )
-                ],
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        _items2[index]['title'],
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }
