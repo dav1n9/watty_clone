@@ -20,11 +20,81 @@ class _BottomNaviState extends State<BottomNavi> {
       onTap: (int index) {
         widget.onTap(index);
         setState(() {
-          selectedIndex = index;
+          // + 아이콘 눌렀을 때 bottomsheet
+          if (index == 2) {
+            showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return SizedBox(
+                    height: 200,
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          width: double.infinity, // 가로 꽉차게 설정
+                          child: TextButton(
+                            onPressed: () {},
+                            child: const Column(
+                              children: [
+                                Text(
+                                  '내돈내먹🍽️',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Text(
+                                  '밖에서 사먹었어요',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.grey,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: TextButton(
+                            onPressed: () {},
+                            child: const Column(
+                              children: [
+                                Text(
+                                  '내가해먹🧑‍🍳',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                Text(
+                                  '집에서 만들어 먹었어요',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.grey,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ));
+              },
+            );
+          } else {
+            selectedIndex = index;
+          }
         });
         print(selectedIndex);
         //Scaffold.of(context).showBottomSheet((context) => Container());
       },
+      type: BottomNavigationBarType.fixed, // 애니메이션 없음
       currentIndex: selectedIndex,
       showSelectedLabels: false,
       selectedItemColor: Colors.grey[800],
