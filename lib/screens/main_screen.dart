@@ -9,9 +9,19 @@ class MainScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          // 알림 아이콘 추가하기
           const SizedBox(
-            height: 130,
+            height: 70,
+          ),
+          Container(
+            alignment: Alignment.bottomRight,
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.notifications_none),
+              iconSize: 30.0,
+            ),
+          ),
+          const SizedBox(
+            height: 15,
           ),
           Container(
             alignment: Alignment.bottomLeft,
@@ -36,10 +46,9 @@ class MainScreen extends StatelessWidget {
               ],
             ),
           ),
-
           Container(
             alignment: Alignment.bottomLeft,
-            padding: const EdgeInsets.fromLTRB(24, 0, 24, 20),
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 30),
             child: CarouselSlider(
               options: CarouselOptions(
                 height: 350.0,
@@ -90,7 +99,9 @@ class MainScreen extends StatelessWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
+            color: Colors.grey.shade100,
+            width: double.infinity,
+            padding: const EdgeInsets.fromLTRB(20, 30, 20, 30),
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

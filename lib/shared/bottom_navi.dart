@@ -57,7 +57,19 @@ class _BottomNaviState extends State<BottomNavi> {
                           ),
                         ),
                         const SizedBox(
-                          height: 15,
+                          height: 10,
+                        ),
+                        const SizedBox(
+                          height: 1,
+                          width: double.infinity,
+                          child: DecoratedBox(
+                            decoration: BoxDecoration(
+                              color: Color.fromARGB(120, 158, 158, 158),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
                         ),
                         SizedBox(
                           width: double.infinity,

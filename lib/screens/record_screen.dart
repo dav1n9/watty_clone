@@ -89,46 +89,57 @@ class _RecordScreenState extends State<RecordScreen> {
           _items2.add(_items2[0]);
         });
       },
-      child: MasonryGridView.count(
-        itemCount: _items2.length,
-        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
-        crossAxisCount: 2,
-        mainAxisSpacing: 4,
-        crossAxisSpacing: 4,
-        itemBuilder: (context, index) {
-          return Card(
-            key: ValueKey(_items2[index]['id']),
-            child: SizedBox(
-              height: 220.0, // _items[index]['height'],
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                child: Column(
-                  children: [
-                    FadeInImage.memoryNetwork(
-                      placeholder: kTransparentImage,
-                      image: _items2[index]['image'],
-                      height: 150,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        _items2[index]['title'],
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
+      child: Container(
+        margin: const EdgeInsets.only(top: 40),
+        child: MasonryGridView.count(
+          itemCount: _items2.length,
+          padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),
+          crossAxisCount: 2,
+          mainAxisSpacing: 4,
+          crossAxisSpacing: 4,
+          itemBuilder: (context, index) {
+            return Card(
+              shape: RoundedRectangleBorder(
+                //모서리를 둥글게 하기 위해 사용
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              elevation: 0.0, //그림자 깊이
+              key: ValueKey(_items2[index]['id']),
+              child: SizedBox(
+                height: 224.0, // _items[index]['height'],
+                child: Container(
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: FadeInImage.memoryNetwork(
+                          placeholder: kTransparentImage,
+                          image: _items2[index]['image'],
+                          height: 150,
+                          fit: BoxFit.cover,
                         ),
                       ),
-                    )
-                  ],
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        alignment: Alignment.bottomLeft,
+                        child: Text(
+                          _items2[index]['title'],
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
