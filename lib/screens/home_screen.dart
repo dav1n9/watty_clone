@@ -33,14 +33,16 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
       ),
-      body: IndexedStack(
-        index: index,
-        children: const [
-          MainScreen(),
-          RecordScreen(),
-          MainScreen(),
-          MyPage(),
-        ],
+      body: SafeArea(
+        child: IndexedStack(
+          index: index,
+          children: const [
+            MainScreen(),
+            RecordScreen(),
+            MainScreen(),
+            MyPage(),
+          ],
+        ),
       ),
     );
   }

@@ -8,9 +8,6 @@ class MyPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const SizedBox(
-            height: 70,
-          ),
           Container(
             alignment: Alignment.bottomRight,
             child: IconButton(

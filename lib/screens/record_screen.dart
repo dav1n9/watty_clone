@@ -90,7 +90,6 @@ class _RecordScreenState extends State<RecordScreen> {
         });
       },
       child: Container(
-        margin: const EdgeInsets.only(top: 40),
         child: MasonryGridView.count(
           itemCount: _items2.length,
           padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 10),

@@ -9,9 +9,6 @@ class MainScreen extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          const SizedBox(
-            height: 70,
-          ),
           Container(
             alignment: Alignment.bottomRight,
             child: IconButton(
@@ -65,34 +62,35 @@ class MainScreen extends StatelessWidget {
                 return Builder(
                   builder: (BuildContext context) {
                     return Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: const EdgeInsets.symmetric(horizontal: 15.0),
-                        padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
-                        decoration: BoxDecoration(
-                            color: Colors.amber,
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 240,
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.symmetric(horizontal: 15.0),
+                      padding: const EdgeInsets.fromLTRB(15, 20, 15, 20),
+                      decoration: BoxDecoration(
+                          color: Colors.amber,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Spacer(),
+                          Text(
+                            i.first,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
                             ),
-                            Text(
-                              i.first,
-                              style: const TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white),
+                          ),
+                          Text(
+                            i.last,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
                             ),
-                            Text(
-                              i.last,
-                              style: const TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white),
-                            ),
-                          ],
-                        ));
+                          ),
+                        ],
+                      ),
+                    );
                   },
                 );
               }).toList(),
@@ -105,9 +103,6 @@ class MainScreen extends StatelessWidget {
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [SizedBox()],
-                ),
                 Text(
                   '여러분의 피드백을 기다리고 있어요',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),

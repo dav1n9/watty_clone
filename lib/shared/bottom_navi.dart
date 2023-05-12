@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:watty_clone/screens/record/create_record_page.dart';
 
 class BottomNavi extends StatefulWidget {
   final void Function(int) onTap;
@@ -35,7 +36,14 @@ class _BottomNaviState extends State<BottomNavi> {
                         SizedBox(
                           width: double.infinity, // 가로 꽉차게 설정
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const CreateRecordPage()),
+                              );
+                            },
                             child: const Column(
                               children: [
                                 Text(
@@ -59,15 +67,20 @@ class _BottomNaviState extends State<BottomNavi> {
                         const SizedBox(
                           height: 10,
                         ),
-                        const SizedBox(
+                        const Divider(
                           height: 1,
-                          width: double.infinity,
-                          child: DecoratedBox(
-                            decoration: BoxDecoration(
-                              color: Color.fromARGB(120, 158, 158, 158),
-                            ),
-                          ),
+                          thickness: 1,
+                          color: Color.fromARGB(120, 158, 158, 158),
                         ),
+                        //  const SizedBox(
+                        //     height: 1,
+                        //     width: double.infinity,
+                        //    child: DecoratedBox(
+                        //      decoration: BoxDecoration(
+                        //        color: Color.fromARGB(120, 158, 158, 158),
+                        //      ),
+                        //    ),
+                        //  ),
                         const SizedBox(
                           height: 10,
                         ),
@@ -103,12 +116,13 @@ class _BottomNaviState extends State<BottomNavi> {
             selectedIndex = index;
           }
         });
-        print(selectedIndex);
+        //print(selectedIndex);
         //Scaffold.of(context).showBottomSheet((context) => Container());
       },
       type: BottomNavigationBarType.fixed, // 애니메이션 없음
       currentIndex: selectedIndex,
       showSelectedLabels: false,
+      showUnselectedLabels: false, // Unselected 라벨 안보이게
       selectedItemColor: Colors.grey[800],
       unselectedItemColor: Colors.grey[500],
       items: const [
