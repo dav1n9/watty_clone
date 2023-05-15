@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:watty_clone/screens/record/write_content_page.dart';
 
 class CreateRecordPage extends StatefulWidget {
   const CreateRecordPage({super.key});
@@ -45,7 +46,14 @@ class _CreateRecordPageState extends State<CreateRecordPage> {
           title: Text('${indexImg + 1}/ $imgLength'),
           actions: [
             TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            WriteContentPage(imgList: imgList)),
+                  );
+                },
                 child: const Text(
                   '다음',
                   style: TextStyle(color: Colors.white, fontSize: 18),
