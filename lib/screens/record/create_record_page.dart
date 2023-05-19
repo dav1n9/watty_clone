@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:watty_clone/controller/create_record_controller.dart';
 import 'package:watty_clone/screens/record/write_content_page.dart';
 
@@ -18,49 +17,52 @@ class _CreateRecordPageState extends State<CreateRecordPage> {
   final recordController = Get.put(CreateRecordController());
 
   final ImagePicker picker = ImagePicker();
-  List<XFile> imgList = [];
-  late int indexImg;
-  late int imgLength;
+  //List<XFile> imgList = [];
 
   @override
   void initState() {
     super.initState();
-    indexImg = 0;
-    imgLength = 0;
-    pickImages();
+    //recordController.pickImages();
+    pick();
+    // imgList = recordController.imgList.cast<XFile>();
   }
 
-  void pickImages() async {
-    var requestStatus = await Permission.storage.request();
-    //var status = await Permission.photos.status;
-
-    if (requestStatus.isGranted) {
-      final images = await picker.pickMultiImage();
-      setState(() {
-        imgList = images;
-        imgLength = images.length;
-      });
-    }
+  Future<void> pick() async {
+    await recordController.pickImages();
   }
+
+  // void pickImages() async {
+  // var requestStatus = await Permission.storage.request();
+  //var status = await Permission.photos.status;
+
+  //if (requestStatus.isGranted) {
+  //final images = await picker.pickMultiImage();
+  //setState(() {
+  // imgList = images;
+  //imgLength = images.length;
+  //});
+  // }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text('${indexImg + 1}/ $imgLength'),
+          title: Obx(
+            () => Text(
+                '${recordController.clickedImgIndex.value + 1}/ ${recordController.imgList.length}'),
+          ),
           actions: [
             TextButton(
                 onPressed: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => WriteContentPage(
-                        imgList: imgList,
-                      ),
+                      builder: (context) => const WriteContentPage(),
                     ),
                   );
 
-                  recordController.setImgList(imgList);
+                  // recordController.setImgList(imgList);
                 },
                 child: const Text(
                   '다음',
@@ -71,21 +73,24 @@ class _CreateRecordPageState extends State<CreateRecordPage> {
           backgroundColor: Colors.black),
       body: Column(
         children: [
-          if (imgList.isNotEmpty) ...[
-            Image.file(
-              File(imgList[indexImg].path),
+          Obx(
+            () => Image.file(
+              File(recordController.imgList
+                  .cast<XFile>()[recordController.clickedImgIndex.value]
+                  .path),
               fit: BoxFit.cover,
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: imgList
+          ),
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Obx(
+              () => Row(
+                children: recordController.imgList
+                    .cast<XFile>()
                     .map(
                       (e) => InkWell(
                         onTap: () {
-                          setState(() {
-                            indexImg = imgList.indexOf(e);
-                          });
+                          recordController.clickedImg(e);
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
@@ -100,7 +105,7 @@ class _CreateRecordPageState extends State<CreateRecordPage> {
                     .toList(),
               ),
             ),
-          ],
+          ),
         ],
       ),
     );
