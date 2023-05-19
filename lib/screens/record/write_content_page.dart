@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:watty_clone/controller/create_record_controller.dart';
 
 class WriteContentPage extends StatefulWidget {
-  final List<XFile> imgList;
-  const WriteContentPage({super.key, required this.imgList});
+  const WriteContentPage({super.key});
 
   @override
   State<WriteContentPage> createState() => _WriteContentPageState();
@@ -126,51 +124,17 @@ class _WriteContentPageState extends State<WriteContentPage>
             ExpansionTile(
               title: const Text('종류 태그'),
               children: [
-                Row(
+                Wrap(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: clickedTagBtn('한식', 0, 0),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: clickedTagBtn('중식', 0, 1),
-                    ),
-                    Padding(
+                    for (int i = 0;
+                        i < recordController.foodsTag.length;
+                        i++) ...[
+                      Padding(
                         padding: const EdgeInsets.only(left: 15),
-                        child: clickedTagBtn('일식', 0, 2)),
-                    Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: clickedTagBtn('양식', 0, 3)),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: clickedTagBtn('분식', 0, 4),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: clickedTagBtn('세계음식', 0, 5),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: clickedTagBtn('치킨/피자/버거', 0, 6),
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: clickedTagBtn('야식/안주류', 0, 7)),
-                    Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: clickedTagBtn('도시락', 0, 8)),
-                    Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: clickedTagBtn('브런치/샐러드', 0, 9)),
+                        child:
+                            clickedTagBtn(recordController.foodsTag[i], 0, i),
+                      ),
+                    ],
                   ],
                 ),
               ],
@@ -178,17 +142,16 @@ class _WriteContentPageState extends State<WriteContentPage>
             ExpansionTile(
               title: const Text('형태 태그'),
               children: [
-                Row(
+                Wrap(
                   children: [
-                    Padding(
+                    for (int i = 0;
+                        i < recordController.typeTag.length;
+                        i++) ...[
+                      Padding(
                         padding: const EdgeInsets.only(left: 15),
-                        child: clickedTagBtn('방문', 1, 0)),
-                    Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: clickedTagBtn('배달', 1, 1)),
-                    Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: clickedTagBtn('포장', 1, 2)),
+                        child: clickedTagBtn(recordController.typeTag[i], 1, i),
+                      ),
+                    ],
                   ],
                 ),
               ],
