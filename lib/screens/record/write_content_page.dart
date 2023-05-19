@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:watty_clone/controller/create_record_controller.dart';
 
 class WriteContentPage extends StatefulWidget {
   final List<XFile> imgList;
@@ -14,15 +16,10 @@ class _WriteContentPageState extends State<WriteContentPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
-  // 종류 태그 리스트
-  List<String> selectedTag = [];
-  List<bool> kindOfFood = List.filled(14, false);
-  // 형태 태그 리스트
-  List<bool> type = List.filled(3, false);
+  final recordController = Get.put(CreateRecordController());
 
   final titleInputController = TextEditingController();
   final contentInputController = TextEditingController();
-  double rating = 0.0;
 
   @override
   void initState() {
@@ -36,41 +33,19 @@ class _WriteContentPageState extends State<WriteContentPage>
     super.dispose();
   }
 
-  Widget unclickedTagBtn(String title, List list, int index) {
+  Widget clickedTagBtn(String title, int tagType, int index) {
     return ElevatedButton(
       onPressed: () {
         setState(() {
-          // 버튼 색깔 바꾸기 구현부분
-          // 리스트 해당 부분 true로.
-          list[index] = true;
-          selectedTag.add(title);
-          //print("index $index : ${list[index]}");
-          // print(selectedTag);
+          tagType == 0
+              ? recordController.setFoodTags(index, title)
+              : recordController.setTypeTags(index, title);
         });
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.grey.shade200, // 입체감
-        elevation: 0,
-      ),
-      child: Text(
-        title,
-        style: const TextStyle(color: Colors.black),
-      ),
-    );
-  }
-
-  Widget clickedTagBtn(String title, List list, int index) {
-    return ElevatedButton(
-      onPressed: () {
-        setState(() {
-          list[index] = false;
-          selectedTag.remove(title);
-          //print("index $index : ${list[index]}");
-          //print(selectedTag);
-        });
-      },
-      style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.grey, // 입체감
+        backgroundColor: recordController.isSeleceted(tagType, index)
+            ? Colors.grey
+            : Colors.grey.shade200,
         elevation: 0,
       ),
       child: Text(
@@ -93,7 +68,14 @@ class _WriteContentPageState extends State<WriteContentPage>
         child: Column(
           children: [
             TextFormField(
-              controller: titleInputController,
+              //controller: titleInputController,
+              initialValue: recordController.place.value,
+              onChanged: (value) {
+                setState(() {
+                  // 한글자 바뀔때마다 정보 updqte ?  비효율?
+                  recordController.setPlace(value);
+                });
+              },
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
                 labelText: '어디서 드셨어요?',
@@ -101,8 +83,13 @@ class _WriteContentPageState extends State<WriteContentPage>
                 fillColor: Colors.grey.shade100,
               ),
             ),
-            TextField(
-              controller: contentInputController,
+            TextFormField(
+              //controller: contentInputController,
+              initialValue: recordController.desc.value,
+              onChanged: (value) {
+                // 한글자 바뀔때마다 정보 updqte ?  비효율?
+                recordController.setDesc(value);
+              },
               decoration: const InputDecoration(
                   labelText: '어디서 무얼 드셨나요? 나의 경험을 자유롭게 적어주세요.', hintText: 'hi'),
               maxLines: 7,
@@ -118,8 +105,8 @@ class _WriteContentPageState extends State<WriteContentPage>
                   ),
                   // 별점 만들기 (flutter_rating_bar)
                   RatingBar.builder(
-                    initialRating: 0,
-                    minRating: 1,
+                    initialRating: recordController.rating.value,
+                    minRating: 0,
                     direction: Axis.horizontal,
                     allowHalfRating: true,
                     itemCount: 5,
@@ -130,7 +117,7 @@ class _WriteContentPageState extends State<WriteContentPage>
                       color: Colors.amber,
                     ),
                     onRatingUpdate: (r) {
-                      rating = r;
+                      recordController.setRating(r);
                     },
                   )
                 ],
@@ -143,72 +130,47 @@ class _WriteContentPageState extends State<WriteContentPage>
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
-                      child: (kindOfFood[0])
-                          ? clickedTagBtn('한식', kindOfFood, 0)
-                          : unclickedTagBtn('한식', kindOfFood, 0),
+                      child: clickedTagBtn('한식', 0, 0),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
-                      child: (kindOfFood[1])
-                          ? clickedTagBtn('중식', kindOfFood, 1)
-                          : unclickedTagBtn('중식', kindOfFood, 1),
+                      child: clickedTagBtn('중식', 0, 1),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: (kindOfFood[2])
-                          ? clickedTagBtn('일식', kindOfFood, 2)
-                          : unclickedTagBtn('일식', kindOfFood, 2),
-                    ),
+                        padding: const EdgeInsets.only(left: 15),
+                        child: clickedTagBtn('일식', 0, 2)),
                     Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: (kindOfFood[3])
-                          ? clickedTagBtn('양식', kindOfFood, 3)
-                          : unclickedTagBtn('양식', kindOfFood, 3),
-                    ),
+                        padding: const EdgeInsets.only(left: 15),
+                        child: clickedTagBtn('양식', 0, 3)),
                   ],
                 ),
                 Row(
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
-                      child: (kindOfFood[4])
-                          ? clickedTagBtn('분식', kindOfFood, 4)
-                          : unclickedTagBtn('분식', kindOfFood, 4),
+                      child: clickedTagBtn('분식', 0, 4),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
-                      child: (kindOfFood[5])
-                          ? clickedTagBtn('세계음식', kindOfFood, 5)
-                          : unclickedTagBtn('세계음식', kindOfFood, 5),
+                      child: clickedTagBtn('세계음식', 0, 5),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 15),
-                      child: (kindOfFood[6])
-                          ? clickedTagBtn('치킨/피자/버거', kindOfFood, 6)
-                          : unclickedTagBtn('치킨/피자/버거', kindOfFood, 6),
+                      child: clickedTagBtn('치킨/피자/버거', 0, 6),
                     ),
                   ],
                 ),
                 Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: (kindOfFood[7])
-                          ? clickedTagBtn('야식/안주류', kindOfFood, 7)
-                          : unclickedTagBtn('야식/안주류', kindOfFood, 7),
-                    ),
+                        padding: const EdgeInsets.only(left: 15),
+                        child: clickedTagBtn('야식/안주류', 0, 7)),
                     Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: (kindOfFood[8])
-                          ? clickedTagBtn('도시락', kindOfFood, 8)
-                          : unclickedTagBtn('도시락', kindOfFood, 8),
-                    ),
+                        padding: const EdgeInsets.only(left: 15),
+                        child: clickedTagBtn('도시락', 0, 8)),
                     Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: (kindOfFood[9])
-                          ? clickedTagBtn('브런치/샐러드', kindOfFood, 9)
-                          : unclickedTagBtn('브런치/샐러드', kindOfFood, 9),
-                    ),
+                        padding: const EdgeInsets.only(left: 15),
+                        child: clickedTagBtn('브런치/샐러드', 0, 9)),
                   ],
                 ),
               ],
@@ -219,23 +181,14 @@ class _WriteContentPageState extends State<WriteContentPage>
                 Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: (type[0])
-                          ? clickedTagBtn('방문', type, 0)
-                          : unclickedTagBtn('방문', type, 0),
-                    ),
+                        padding: const EdgeInsets.only(left: 15),
+                        child: clickedTagBtn('방문', 1, 0)),
                     Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: (type[1])
-                          ? clickedTagBtn('배달', type, 1)
-                          : unclickedTagBtn('배달', type, 1),
-                    ),
+                        padding: const EdgeInsets.only(left: 15),
+                        child: clickedTagBtn('배달', 1, 1)),
                     Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: (type[2])
-                          ? clickedTagBtn('포장', type, 2)
-                          : unclickedTagBtn('포장', type, 2),
-                    ),
+                        padding: const EdgeInsets.only(left: 15),
+                        child: clickedTagBtn('포장', 1, 2)),
                   ],
                 ),
               ],
@@ -245,13 +198,13 @@ class _WriteContentPageState extends State<WriteContentPage>
             ),
             ElevatedButton(
               onPressed: () {
-                for (var img in widget.imgList) {
-                  print("imgPath: ${img.path}");
-                }
-                print("첫번째 textField : ${titleInputController.text}");
-                print("두번째 textField : ${contentInputController.text}");
-                print("Rating: $rating");
-                print("TagList : $selectedTag");
+                print(
+                    "Get - img : ${recordController.imgList.map((e) => e.path)}");
+                print("Get - Place : ${recordController.place}");
+                print("Get - Desc : ${recordController.desc}");
+                print("Get - Rating : ${recordController.rating}");
+                print(
+                    "Get - TagList : ${recordController.selectedTag.map((e) => e)}");
               },
               child: const Text(
                 '완료',
