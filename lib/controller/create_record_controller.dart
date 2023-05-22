@@ -2,8 +2,11 @@ import 'package:get/get.dart';
 
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:watty_clone/model/record_model.dart';
 
 class CreateRecordController extends GetxController {
+  late RecordModel newRecord;
+
   List<String> foodsTag = [
     '한식',
     '중식',
@@ -114,5 +117,16 @@ class CreateRecordController extends GetxController {
 
   void clickedImg(XFile e) {
     clickedImgIndex.value = imgList.indexOf(e);
+  }
+
+  void setRecordModel() {
+    newRecord = RecordModel(
+        imgList: imgList.map((e) => e.path).toList(),
+        place: place.value,
+        desc: desc.value,
+        rating: rating.value,
+        tags: selectedTag.map((e) => e.toString()).toList());
+
+    print(newRecord.toJson());
   }
 }

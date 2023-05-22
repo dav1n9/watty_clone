@@ -15,7 +15,6 @@ class _WriteContentPageState extends State<WriteContentPage>
   late AnimationController _controller;
 
   final recordController = Get.put(CreateRecordController());
-
   final titleInputController = TextEditingController();
   final contentInputController = TextEditingController();
 
@@ -168,6 +167,8 @@ class _WriteContentPageState extends State<WriteContentPage>
                 print("Get - Rating : ${recordController.rating}");
                 print(
                     "Get - TagList : ${recordController.selectedTag.map((e) => e)}");
+                //model -> Json
+                recordController.setRecordModel();
               },
               child: const Text(
                 '완료',
