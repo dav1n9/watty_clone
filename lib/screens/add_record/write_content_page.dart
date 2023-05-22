@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:watty_clone/controller/create_record_controller.dart';
+import 'package:watty_clone/screens/records/record_details.dart';
 
 class WriteContentPage extends StatefulWidget {
   const WriteContentPage({super.key});
@@ -160,6 +161,7 @@ class _WriteContentPageState extends State<WriteContentPage>
             ),
             ElevatedButton(
               onPressed: () {
+                // Get에 저장된 정보 보여주기
                 print(
                     "Get - img : ${recordController.imgList.map((e) => e.path)}");
                 print("Get - Place : ${recordController.place}");
@@ -169,6 +171,10 @@ class _WriteContentPageState extends State<WriteContentPage>
                     "Get - TagList : ${recordController.selectedTag.map((e) => e)}");
                 //model -> Json
                 recordController.setRecordModel();
+
+                // 일단 recordDetail 로 넘기기
+                Navigator.push(
+                    context, GetPageRoute(page: () => const RecordDetails()));
               },
               child: const Text(
                 '완료',

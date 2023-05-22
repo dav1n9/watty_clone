@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:watty_clone/controller/create_record_controller.dart';
-import 'package:watty_clone/screens/record/write_content_page.dart';
+import 'package:watty_clone/screens/add_record/write_content_page.dart';
 
 class CreateRecordPage extends StatefulWidget {
   const CreateRecordPage({super.key});

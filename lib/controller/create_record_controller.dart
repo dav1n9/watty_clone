@@ -119,6 +119,7 @@ class CreateRecordController extends GetxController {
     clickedImgIndex.value = imgList.indexOf(e);
   }
 
+  // Model -> Json
   void setRecordModel() {
     newRecord = RecordModel(
         imgList: imgList.map((e) => e.path).toList(),

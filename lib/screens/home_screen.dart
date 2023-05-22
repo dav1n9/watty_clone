@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:watty_clone/screens/main_screen.dart';
 import 'package:watty_clone/screens/mypage_screen.dart';
-import 'package:watty_clone/screens/record_screen.dart';
+import 'package:watty_clone/screens/records/record_screen.dart';
 import 'package:watty_clone/shared/bottom_navi.dart';
 
 class HomeScreen extends StatefulWidget {

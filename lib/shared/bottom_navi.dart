@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:watty_clone/screens/record/create_record_page.dart';
+import 'package:watty_clone/screens/add_record/create_record_page.dart';
 
 class BottomNavi extends StatefulWidget {
   final void Function(int) onTap;
