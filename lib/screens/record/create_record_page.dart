@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,21 +15,33 @@ class CreateRecordPage extends StatefulWidget {
 }
 
 class _CreateRecordPageState extends State<CreateRecordPage> {
-  final recordController = Get.put(CreateRecordController());
+  late CreateRecordController recordController;
+
+  CarouselController buttonCarouselController = CarouselController();
 
   final ImagePicker picker = ImagePicker();
+
   //List<XFile> imgList = [];
 
   @override
   void initState() {
     super.initState();
     //recordController.pickImages();
+    recordController =
+        Get.put<CreateRecordController>(CreateRecordController());
+
     pick();
     // imgList = recordController.imgList.cast<XFile>();
   }
 
   Future<void> pick() async {
     await recordController.pickImages();
+  }
+
+  @override
+  void dispose() {
+    Get.delete<CreateRecordController>();
+    super.dispose();
   }
 
   // void pickImages() async {
@@ -52,6 +65,16 @@ class _CreateRecordPageState extends State<CreateRecordPage> {
             () => Text(
                 '${recordController.clickedImgIndex.value + 1}/ ${recordController.imgList.length}'),
           ),
+          leading: TextButton(
+              onPressed: () {
+                Get.back();
+
+                // recordController.setImgList(imgList);
+              },
+              child: const Text(
+                '<',
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              )),
           actions: [
             TextButton(
                 onPressed: () {
@@ -74,11 +97,30 @@ class _CreateRecordPageState extends State<CreateRecordPage> {
       body: Column(
         children: [
           Obx(
-            () => Image.file(
-              File(recordController.imgList
-                  .cast<XFile>()[recordController.clickedImgIndex.value]
-                  .path),
-              fit: BoxFit.cover,
+            () => CarouselSlider(
+              options: CarouselOptions(
+                  height: 400.0,
+                  enableInfiniteScroll: false,
+                  onPageChanged: (index, reason) {
+                    print(index);
+                  }),
+              carouselController: buttonCarouselController,
+              items: recordController.imgList.cast<XFile>().map((i) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                      decoration: const BoxDecoration(color: Colors.amber),
+                      child: Image.file(
+                        height: 500,
+                        File(i.path),
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
             ),
           ),
           SingleChildScrollView(
@@ -91,6 +133,11 @@ class _CreateRecordPageState extends State<CreateRecordPage> {
                       (e) => InkWell(
                         onTap: () {
                           recordController.clickedImg(e);
+
+                          buttonCarouselController.jumpToPage(recordController
+                              .imgList
+                              .cast<XFile>()
+                              .indexOf(e));
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),

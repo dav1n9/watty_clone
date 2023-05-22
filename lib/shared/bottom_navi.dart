@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:watty_clone/screens/record/create_record_page.dart';
 
 class BottomNavi extends StatefulWidget {
@@ -39,9 +40,8 @@ class _BottomNaviState extends State<BottomNavi> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const CreateRecordPage()),
+                                GetPageRoute(
+                                    page: () => const CreateRecordPage()),
                               );
                             },
                             child: const Column(
