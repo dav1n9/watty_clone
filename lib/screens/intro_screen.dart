@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:watty_clone/controller/user_controller.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});
@@ -9,6 +11,8 @@ class IntroScreen extends StatefulWidget {
 }
 
 class _IntroScreenState extends State<IntroScreen> {
+  final userController = Get.put(UserController());
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +48,7 @@ class _IntroScreenState extends State<IntroScreen> {
 
   Future<void> _fetch1() async {
     await Future.delayed(const Duration(seconds: 4));
+    userController.setUserModel("다빈", "img", "email");
     Navigator.pushReplacementNamed(context, "/home");
   }
 }

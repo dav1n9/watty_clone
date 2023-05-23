@@ -1,7 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:watty_clone/controller/user_controller.dart';
 
-class MyPage extends StatelessWidget {
+class MyPage extends StatefulWidget {
   const MyPage({super.key});
+
+  @override
+  State<MyPage> createState() => _MyPageState();
+}
+
+class _MyPageState extends State<MyPage> {
+  late final UserController userController;
+
+  @override
+  void initState() {
+    userController = Get.put(UserController());
+    getUser();
+    super.initState();
+  }
+
+  void getUser() async {
+    userController.getUserData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +42,10 @@ class MyPage extends StatelessWidget {
           Container(
             alignment: Alignment.bottomLeft,
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: const Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Welcome!',
                   style: TextStyle(
                     fontSize: 24,
@@ -33,8 +53,8 @@ class MyPage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '다빈!',
-                  style: TextStyle(
+                  '${userController.userName.value}!',
+                  style: const TextStyle(
                     fontSize: 18,
                   ),
                 ),

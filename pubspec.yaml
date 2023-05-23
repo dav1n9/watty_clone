@@ -44,6 +44,7 @@ dependencies:
   get: ^4.6.5
   json_annotation: ^4.8.1
   lottie: ^2.3.2
+  shared_preferences: ^2.1.1
 
 dev_dependencies:
   flutter_test:
