@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:watty_clone/screens/home_screen.dart';
+import 'package:watty_clone/screens/intro_screen.dart';
 import 'package:watty_clone/screens/mypage_screen.dart';
 
 void main() {
@@ -16,7 +17,8 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       initialRoute: "/",
       routes: {
-        "/": (context) => const HomeScreen(),
+        "/": (context) => const IntroScreen(),
+        "/home": (context) => const HomeScreen(),
         "/mypage": (context) => const MyPage(),
       },
     );
