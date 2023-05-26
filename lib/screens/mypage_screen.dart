@@ -69,13 +69,22 @@ class _MyPageState extends State<MyPage> {
             () => Container(
               margin: const EdgeInsets.all(10),
               height: 160,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(90.0),
-                child: Image.network(userController.userImg.value, errorBuilder:
-                    (BuildContext? context, Object? exception,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(90), //모서리를 둥글게
+                border: Border.all(color: Colors.black87, width: 10),
+              ), //테두리
+              child: Container(
+                margin: const EdgeInsets.all(4), // 이미지 테두리의 흰색 부분
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(90.0),
+                  child: Image.network(
+                    userController.userImg.value,
+                    errorBuilder: (BuildContext? context, Object? exception,
                         StackTrace? stackTrace) {
-                  return const Icon(Icons.image_not_supported_outlined);
-                }),
+                      return const Icon(Icons.image_not_supported_outlined);
+                    },
+                  ),
+                ),
               ),
             ),
           ),
@@ -85,7 +94,7 @@ class _MyPageState extends State<MyPage> {
               Container(
                 width: 140,
                 height: 140,
-                margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                 padding: const EdgeInsets.all(20),
                 color: const Color.fromARGB(255, 204, 57, 47),
                 child: const Column(
@@ -136,7 +145,7 @@ class _MyPageState extends State<MyPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        '나만의 Playlist 💽',
+                        'Playlist',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
