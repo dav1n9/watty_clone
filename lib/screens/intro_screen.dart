@@ -48,7 +48,10 @@ class _IntroScreenState extends State<IntroScreen> {
 
   Future<void> _fetch1() async {
     await Future.delayed(const Duration(seconds: 4));
-    userController.setUserModel("다빈", "img", "email");
+    await userController.setUserModel(
+        "다빈",
+        "https://cdn.pixabay.com/photo/2023/05/21/20/30/sky-8009386_1280.jpg",
+        "email");
     Navigator.pushReplacementNamed(context, "/home");
   }
 }

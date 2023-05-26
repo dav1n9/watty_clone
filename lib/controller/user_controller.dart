@@ -9,16 +9,16 @@ class UserController extends GetxController {
   RxString userImg = "".obs;
   RxString userMail = "".obs;
 
-  void setUserModel(String name, String img, String mail) async {
+  Future<void> setUserModel(String name, String img, String mail) async {
     newUser = UserInfoModel(name: name, profileImg: img, mail: mail);
 
     print(newUser.toJson());
-    print(newUser.toJson()['name']);
+    //print(newUser.toJson()['name']);
 
-    setUserData(newUser);
+    await setUserData(newUser);
   }
 
-  static void setUserData(UserInfoModel user) async {
+  static Future<void> setUserData(UserInfoModel user) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
 
     pref.setString("name", user.toJson()['name']);
@@ -26,7 +26,7 @@ class UserController extends GetxController {
     pref.setString("mail", user.toJson()['mail']);
   }
 
-  void getUserData() async {
+  Future<void> getUserData() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
 
     userName.value = pref.getString("name")!;

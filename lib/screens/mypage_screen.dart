@@ -20,7 +20,10 @@ class _MyPageState extends State<MyPage> {
   }
 
   void getUser() async {
-    userController.getUserData();
+    await userController.getUserData();
+    print("newUser.toJson(): ${userController.newUser.toJson()['name']}");
+    print("getUserData: ${userController.userName.value}");
+    print("getUserData: ${userController.userImg.value}");
   }
 
   @override
@@ -31,13 +34,12 @@ class _MyPageState extends State<MyPage> {
           Container(
             alignment: Alignment.bottomRight,
             child: IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, "/setting");
+              },
               icon: const Icon(Icons.menu),
               iconSize: 30,
             ),
-          ),
-          const SizedBox(
-            height: 30,
           ),
           Container(
             alignment: Alignment.bottomLeft,
@@ -52,24 +54,37 @@ class _MyPageState extends State<MyPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
-                  '${userController.userName.value}!',
-                  style: const TextStyle(
-                    fontSize: 18,
+                Obx(
+                  () => Text(
+                    '${userController.userName.value}!',
+                    style: const TextStyle(
+                      fontSize: 18,
+                    ),
                   ),
                 ),
               ],
             ),
           ),
-          const SizedBox(
-            height: 40,
+          Obx(
+            () => Container(
+              margin: const EdgeInsets.all(10),
+              height: 160,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(90.0),
+                child: Image.network(userController.userImg.value, errorBuilder:
+                    (BuildContext? context, Object? exception,
+                        StackTrace? stackTrace) {
+                  return const Icon(Icons.image_not_supported_outlined);
+                }),
+              ),
+            ),
           ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                width: 180,
-                height: 180,
+                width: 140,
+                height: 140,
                 margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                 padding: const EdgeInsets.all(20),
                 color: const Color.fromARGB(255, 204, 57, 47),
@@ -96,8 +111,52 @@ class _MyPageState extends State<MyPage> {
               ),
             ],
           ),
+
+          // 그리드
+
+          Container(
+            padding: const EdgeInsets.all(20),
+            width: MediaQuery.of(context).size.width,
+            height: 400,
+            child: GridView.builder(
+              itemCount: 10, //item 개수
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: 1,
+                mainAxisSpacing: 10,
+                crossAxisSpacing: 10,
+              ),
+              itemBuilder: (BuildContext context, int index) {
+                //item 의 반목문 항목 형성
+                return Container(
+                  padding: const EdgeInsets.all(10),
+                  color: Colors.lightGreen,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        '나만의 Playlist 💽',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Text(
+                        '$index 번',
+                        style: const TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
           const SizedBox(
-            height: 110,
+            height: 20,
           ),
           Container(
             width: double.infinity,
