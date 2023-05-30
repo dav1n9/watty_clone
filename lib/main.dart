@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:watty_clone/screens/home_screen.dart';
 import 'package:watty_clone/screens/intro_screen.dart';
 import 'package:watty_clone/screens/mypage_screen.dart';
+import 'package:watty_clone/screens/setting_page/update_profile.dart';
 import 'package:watty_clone/screens/setting_screen.dart';
 
 void main() {
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         "/home": (context) => const HomeScreen(),
         "/mypage": (context) => const MyPage(),
         "/setting": (context) => const SettingScreen(),
+        "/updateProfile": (context) => const UpdateProfileScreen(),
       },
     );
   }

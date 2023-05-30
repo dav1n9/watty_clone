@@ -12,6 +12,8 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> {
   late final UserController userController;
 
+  int itemCount = 10;
+
   @override
   void initState() {
     userController = Get.put(UserController());
@@ -128,7 +130,7 @@ class _MyPageState extends State<MyPage> {
             width: MediaQuery.of(context).size.width,
             height: 400,
             child: GridView.builder(
-              itemCount: 10, //item 개수
+              itemCount: itemCount, //item 개수
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,
                 childAspectRatio: 1,
@@ -167,24 +169,28 @@ class _MyPageState extends State<MyPage> {
           const SizedBox(
             height: 20,
           ),
-          Container(
-            width: double.infinity,
-            color: Colors.grey.shade100,
-            padding: const EdgeInsets.all(50),
-            child: Column(
-              children: [
-                const Text('나의 맛있는 순간을\n레코드로 남겨보세요'),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueGrey.shade800,
+          Visibility(
+            visible: itemCount > 0 ? false : true,
+            child: Container(
+              width: double.infinity,
+              color: Colors.grey.shade100,
+              padding: const EdgeInsets.all(50),
+              child: Column(
+                children: [
+                  const Text('나의 맛있는 순간을\n레코드로 남겨보세요'),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blueGrey.shade800,
+                    ),
+                    child: const Text(
+                      "레코드 작성",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
                   ),
-                  child: const Text(
-                    "레코드 작성",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],

@@ -25,7 +25,9 @@ class SettingScreen extends StatelessWidget {
               color: Colors.white,
               alignment: Alignment.bottomLeft,
               child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/updateProfile');
+                  },
                   style: const ButtonStyle(),
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width,
