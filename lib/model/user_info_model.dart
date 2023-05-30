@@ -7,9 +7,18 @@ class UserInfoModel {
   String name;
   String profileImg;
   String mail;
+  String userDesc;
+  String mbti;
+  List<String> favorite;
 
-  UserInfoModel(
-      {required this.name, required this.profileImg, required this.mail});
+  UserInfoModel({
+    required this.name,
+    required this.profileImg,
+    required this.mail,
+    required this.userDesc,
+    required this.mbti,
+    required this.favorite,
+  });
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) =>
       _$UserInfoModelFromJson(json);
