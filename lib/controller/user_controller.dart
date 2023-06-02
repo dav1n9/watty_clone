@@ -1,10 +1,12 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:watty_clone/model/user_info_model.dart';
+import 'dart:convert';
 
 class UserController extends GetxController {
   late UserInfoModel newUser;
 
+  RxMap user = {}.obs;
   RxString userName = "".obs;
   RxString userImg = "".obs;
   RxString userMail = "".obs;
@@ -32,21 +34,22 @@ class UserController extends GetxController {
   static Future<void> setUserData(UserInfoModel user) async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
 
-    pref.setString("name", user.toJson()['name']);
-    pref.setString("profileImg", user.toJson()['profileImg']);
-    pref.setString("mail", user.toJson()['mail']);
-    pref.setString("userDesc", user.toJson()['userDesc']);
-    pref.setString("mbti", user.toJson()['mbti']);
-    // 리스트는...?
+    if (!pref.containsKey("user")) {
+      pref.setString("user", json.encode(user.toJson()));
+    }
   }
 
   Future<void> getUserData() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
 
-    userName.value = pref.getString("name")!;
-    userImg.value = pref.getString("profileImg")!;
-    userMail.value = pref.getString("mail")!;
-    userDesc.value = pref.getString("userDesc")!;
-    userMbti.value = pref.getString("mbti")!;
+    user.value = json.decode(pref.getString("user")!);
+  }
+
+  void updateName(String name) async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+    await getUserData();
+
+    user["name"] = name;
+    pref.setString("user", json.encode(user.toJson()));
   }
 }

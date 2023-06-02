@@ -23,9 +23,8 @@ class _MyPageState extends State<MyPage> {
 
   void getUser() async {
     await userController.getUserData();
-    print("newUser.toJson(): ${userController.newUser.toJson()['name']}");
-    print("getUserData: ${userController.userName.value}");
-    print("getUserData: ${userController.userImg.value}");
+    print("getUserData: ${userController.user['name']}");
+    print("getUserData: ${userController.user['profileImg']}");
   }
 
   @override
@@ -58,7 +57,7 @@ class _MyPageState extends State<MyPage> {
                 ),
                 Obx(
                   () => Text(
-                    '${userController.userName.value}!',
+                    '${userController.user['name']}!',
                     style: const TextStyle(
                       fontSize: 18,
                     ),
@@ -71,6 +70,7 @@ class _MyPageState extends State<MyPage> {
             () => Container(
               margin: const EdgeInsets.all(10),
               height: 160,
+              width: 160,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(90), //모서리를 둥글게
                 border: Border.all(color: Colors.black87, width: 10),
@@ -80,7 +80,7 @@ class _MyPageState extends State<MyPage> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(90.0),
                   child: Image.network(
-                    userController.userImg.value,
+                    userController.user['profileImg'],
                     errorBuilder: (BuildContext? context, Object? exception,
                         StackTrace? stackTrace) {
                       return const Icon(Icons.image_not_supported_outlined);
