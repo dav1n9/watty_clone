@@ -19,16 +19,14 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     userController = Get.put(UserController());
     getUser();
     nickNameController =
-        TextEditingController(text: userController.userName.value);
-    descController = TextEditingController(text: userController.userDesc.value);
+        TextEditingController(text: userController.user["name"]);
+    descController =
+        TextEditingController(text: userController.user["userDesc"]);
     super.initState();
   }
 
   void getUser() async {
     await userController.getUserData();
-    print("newUser.toJson(): ${userController.newUser.toJson()['name']}");
-    print("getUserData: ${userController.userName.value}");
-    print("getUserData: ${userController.userImg.value}");
   }
 
   @override
@@ -63,7 +61,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(90.0),
                       child: Image.network(
-                        userController.userImg.value,
+                        userController.user["profileImg"],
                         errorBuilder: (BuildContext? context, Object? exception,
                             StackTrace? stackTrace) {
                           return const Icon(Icons.image_not_supported_outlined);
@@ -89,7 +87,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 onPressed: () {},
                 style: OutlinedButton.styleFrom(),
                 child: Text(
-                  userController.userMbti.value,
+                  userController.user["mbti"],
                   style: TextStyle(color: Colors.red.shade700),
                 ),
               ),
@@ -97,6 +95,15 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
               const Text('선호하는 음식 종류 >'),
               const TextField(),
               const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  print("update profile!");
+                  userController.updateName(nickNameController.value.text);
+
+                  Navigator.of(context).pop();
+                },
+                child: const Text("확인"),
+              ),
             ],
           ),
         ),
