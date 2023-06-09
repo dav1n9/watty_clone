@@ -72,37 +72,76 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              const Text('닉네임'),
-              TextFormField(
-                controller: nickNameController,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text('닉네임'),
+                  TextFormField(
+                    controller: nickNameController,
+                  ),
+                  const SizedBox(height: 20),
+                  const Text('소개'),
+                  TextFormField(
+                    controller: descController,
+                  ),
+                  const SizedBox(height: 20),
+                  const Text('MBTI >'),
+                  OutlinedButton(
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/setMbti');
+                    },
+                    style: OutlinedButton.styleFrom(),
+                    child: Obx(
+                      () => Text(
+                        userController.user["mbti"],
+                        style: TextStyle(color: Colors.red.shade700),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pushNamed('/setFood');
+                    },
+                    child: const Text('선호하는 음식 종류 >'),
+                  ),
+                  Obx(
+                    () => Wrap(
+                      children: [
+                        for (int i = 0;
+                            i < userController.selectedFoods.length;
+                            i++) ...[
+                          OutlinedButton(
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(),
+                            child: Text(
+                              '${userController.selectedFoods[i]}',
+                              style: TextStyle(color: Colors.red.shade700),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 20),
-              const Text('소개'),
-              TextFormField(
-                controller: descController,
-              ),
-              const SizedBox(height: 20),
-              const Text('MBTI >'),
-              OutlinedButton(
-                onPressed: () {},
-                style: OutlinedButton.styleFrom(),
-                child: Text(
-                  userController.user["mbti"],
-                  style: TextStyle(color: Colors.red.shade700),
+              const SizedBox(height: 30),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                padding: const EdgeInsets.all(20),
+                child: ElevatedButton(
+                  onPressed: () {
+                    print("update profile!");
+                    userController.updateName(nickNameController.value.text);
+                    userController.updateDesc(descController.value.text);
+                    Navigator.of(context).pop();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red.shade700,
+                    elevation: 0,
+                  ),
+                  child: const Text("확인"),
                 ),
-              ),
-              const SizedBox(height: 20),
-              const Text('선호하는 음식 종류 >'),
-              const TextField(),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  print("update profile!");
-                  userController.updateName(nickNameController.value.text);
-
-                  Navigator.of(context).pop();
-                },
-                child: const Text("확인"),
               ),
             ],
           ),

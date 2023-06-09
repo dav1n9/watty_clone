@@ -90,6 +90,32 @@ class _MyPageState extends State<MyPage> {
               ),
             ),
           ),
+          Obx(
+            () => Column(
+              children: [
+                Text(
+                  '${userController.user['name']}',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '${userController.user['mbti']}',
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '${userController.user['userDesc']}',
+                  style: const TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          ),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
