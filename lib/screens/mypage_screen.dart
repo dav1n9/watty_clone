@@ -21,10 +21,14 @@ class _MyPageState extends State<MyPage> {
     super.initState();
   }
 
-  void getUser() async {
-    await userController.getUserData();
-    print("getUserData: ${userController.user['name']}");
-    print("getUserData: ${userController.user['profileImg']}");
+  void getUser() {
+    setState() async {
+      await userController.getUserData();
+      userController.setSelectedFoods();
+    }
+
+    print("getUserData: ${userController.newUser.value.name}");
+    print("getUserData: ${userController.newUser.value.favorite}");
   }
 
   @override
@@ -57,7 +61,7 @@ class _MyPageState extends State<MyPage> {
                 ),
                 Obx(
                   () => Text(
-                    '${userController.user['name']}!',
+                    '${userController.newUser.value.name}!',
                     style: const TextStyle(
                       fontSize: 18,
                     ),
@@ -66,49 +70,48 @@ class _MyPageState extends State<MyPage> {
               ],
             ),
           ),
-          Obx(
-            () => Container(
-              margin: const EdgeInsets.all(10),
-              height: 160,
-              width: 160,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(90), //모서리를 둥글게
-                border: Border.all(color: Colors.black87, width: 10),
-              ), //테두리
-              child: Container(
-                margin: const EdgeInsets.all(4), // 이미지 테두리의 흰색 부분
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(90.0),
-                  child: Image.network(
-                    userController.user['profileImg'],
-                    errorBuilder: (BuildContext? context, Object? exception,
-                        StackTrace? stackTrace) {
-                      return const Icon(Icons.image_not_supported_outlined);
-                    },
-                  ),
+          Container(
+            margin: const EdgeInsets.all(10),
+            height: 160,
+            width: 160,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(90), //모서리를 둥글게
+              border: Border.all(color: Colors.black87, width: 10),
+            ), //테두리
+            child: Container(
+              margin: const EdgeInsets.all(4), // 이미지 테두리의 흰색 부분
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(90.0),
+                child: Image.network(
+                  userController.newUser.value.profileImg,
+                  errorBuilder: (BuildContext? context, Object? exception,
+                      StackTrace? stackTrace) {
+                    return const Icon(Icons.image_not_supported_outlined);
+                  },
                 ),
               ),
             ),
           ),
+
           Obx(
             () => Column(
               children: [
                 Text(
-                  '${userController.user['name']}',
+                  userController.newUser.value.name,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  '${userController.user['mbti']}',
+                  userController.newUser.value.mbti,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  '${userController.user['userDesc']}',
+                  userController.newUser.value.userDesc,
                   style: const TextStyle(
                     fontSize: 16,
                   ),

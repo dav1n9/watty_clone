@@ -18,15 +18,22 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   void initState() {
     userController = Get.put(UserController());
     getUser();
-    nickNameController =
-        TextEditingController(text: userController.user["name"]);
-    descController =
-        TextEditingController(text: userController.user["userDesc"]);
+    // nickNameController = TextEditingController(text: userController.user["name"]);
+    // descController = TextEditingController(text: userController.user["userDesc"]);
+
     super.initState();
   }
 
-  void getUser() async {
-    await userController.getUserData();
+  void getUser() {
+    setState(() {
+      userController.getUserData();
+      nickNameController =
+          TextEditingController(text: userController.newUser.value.name);
+      descController =
+          TextEditingController(text: userController.newUser.value.userDesc);
+
+      userController.setSelectedFoods();
+    });
   }
 
   @override
@@ -47,26 +54,25 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Obx(
-                () => Container(
-                  margin: const EdgeInsets.all(10),
-                  height: 160,
-                  width: 160,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(90), //모서리를 둥글게
-                    border: Border.all(color: Colors.black87, width: 10),
-                  ), //테두리
-                  child: Container(
-                    margin: const EdgeInsets.all(4), // 이미지 테두리의 흰색 부분
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(90.0),
-                      child: Image.network(
-                        userController.user["profileImg"],
-                        errorBuilder: (BuildContext? context, Object? exception,
-                            StackTrace? stackTrace) {
-                          return const Icon(Icons.image_not_supported_outlined);
-                        },
-                      ),
+              Container(
+                margin: const EdgeInsets.all(10),
+                height: 160,
+                width: 160,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(90), //모서리를 둥글게
+                  border: Border.all(color: Colors.black87, width: 10),
+                ), //테두리
+                child: Container(
+                  margin: const EdgeInsets.all(4), // 이미지 테두리의 흰색 부분
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(90.0),
+                    child: Image.network(
+                      //userController.user["profileImg"],
+                      userController.newUser.value.profileImg,
+                      errorBuilder: (BuildContext? context, Object? exception,
+                          StackTrace? stackTrace) {
+                        return const Icon(Icons.image_not_supported_outlined);
+                      },
                     ),
                   ),
                 ),
@@ -93,7 +99,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     style: OutlinedButton.styleFrom(),
                     child: Obx(
                       () => Text(
-                        userController.user["mbti"],
+                        userController.newUser.value.mbti,
                         style: TextStyle(color: Colors.red.shade700),
                       ),
                     ),
@@ -134,6 +140,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                     print("update profile!");
                     userController.updateName(nickNameController.value.text);
                     userController.updateDesc(descController.value.text);
+                    //userController.reset();
                     Navigator.of(context).pop();
                   },
                   style: ElevatedButton.styleFrom(

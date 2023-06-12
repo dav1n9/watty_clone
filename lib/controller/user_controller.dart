@@ -4,7 +4,13 @@ import 'package:watty_clone/model/user_info_model.dart';
 import 'dart:convert';
 
 class UserController extends GetxController {
-  late UserInfoModel newUser;
+  Rx<UserInfoModel> newUser = UserInfoModel(
+      name: '',
+      profileImg: '',
+      mail: '',
+      userDesc: '',
+      mbti: '',
+      favorite: []).obs;
 
   final List<String> mbti = [
     'ISTJ',
@@ -40,7 +46,8 @@ class UserController extends GetxController {
     '카페',
     '디저트',
   ];
-  RxMap user = {}.obs;
+
+  //RxMap user = {}.obs;
 
   //RxString userName = "".obs;
   //RxString userImg = "".obs;
@@ -51,7 +58,7 @@ class UserController extends GetxController {
 
   Future<void> setUserModel(String name, String img, String mail, String desc,
       String mbti, List<String> favorite) async {
-    newUser = UserInfoModel(
+    newUser.value = UserInfoModel(
       name: name,
       profileImg: img,
       mail: mail,
@@ -63,7 +70,8 @@ class UserController extends GetxController {
     print(newUser.toJson());
     //print(newUser.toJson()['name']);
 
-    await setUserData(newUser);
+    await setUserData(newUser.value);
+    setSelectedFoods();
   }
 
   static Future<void> setUserData(UserInfoModel user) async {
@@ -77,7 +85,22 @@ class UserController extends GetxController {
   Future<void> getUserData() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
 
-    user.value = json.decode(pref.getString("user")!);
+    //user.value = json.decode(pref.getString("user")!);
+    if (pref.getString("user") != null) {
+      newUser.value =
+          UserInfoModel.fromJson(json.decode(pref.getString("user")!));
+    }
+  }
+
+  Future<bool> isData() async {
+    final SharedPreferences pref = await SharedPreferences.getInstance();
+
+    //user.value = json.decode(pref.getString("user")!);
+    if (pref.containsKey("user")) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // 이름 수정
@@ -85,8 +108,11 @@ class UserController extends GetxController {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     await getUserData();
 
-    user["name"] = name;
-    pref.setString("user", json.encode(user.toJson()));
+    //user["name"] = name;
+    newUser.value.name = name;
+
+    //pref.setString("user", json.encode(user.toJson()));
+    pref.setString("user", json.encode(newUser.toJson()));
   }
 
   // 소개글 수정
@@ -94,8 +120,11 @@ class UserController extends GetxController {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     await getUserData();
 
-    user["userDesc"] = desc;
-    pref.setString("user", json.encode(user.toJson()));
+    //user["userDesc"] = desc;
+    newUser.value.userDesc = desc;
+
+    //pref.setString("user", json.encode(user.toJson()));
+    pref.setString("user", json.encode(newUser.toJson()));
   }
 
   // mbti 수정
@@ -103,8 +132,10 @@ class UserController extends GetxController {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     await getUserData();
 
-    user["mbti"] = mbti;
-    pref.setString("user", json.encode(user.toJson()));
+    //user["mbti"] = mbti;
+    newUser.value.mbti = mbti;
+    //pref.setString("user", json.encode(user.toJson()));
+    pref.setString("user", json.encode(newUser.toJson()));
   }
 
   // favorite food 수정
@@ -112,18 +143,23 @@ class UserController extends GetxController {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     await getUserData();
 
-    user["favorite"] = selectedFoods;
-    pref.setString("user", json.encode(user.toJson()));
+    //user["favorite"] = selectedFoods;
+    newUser.value.favorite = selectedFoods.cast();
+
+    //pref.setString("user", json.encode(user.toJson()));
+    pref.setString("user", json.encode(newUser.toJson()));
   }
 
   void reset() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     pref.clear();
+    print("reset: ${pref.getString("user")}");
   }
 
   void setSelectedFoods() async {
     await getUserData();
 
-    selectedFoods.value = user['favorite'];
+    //selectedFoods.value = user['favorite'];
+    selectedFoods.value = newUser.value.favorite;
   }
 }

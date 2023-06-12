@@ -28,8 +28,10 @@ class _SetFavoriteFoodScreenState extends State<SetFavoriteFoodScreen> {
             if (userController.selectedFoods.contains(food)) {
               //뺴기
               userController.selectedFoods.remove(food);
+              print("remove : $food");
             } else {
               userController.selectedFoods.add(food);
+              print("add : $food");
             }
           });
         },

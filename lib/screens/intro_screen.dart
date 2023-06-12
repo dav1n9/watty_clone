@@ -48,14 +48,22 @@ class _IntroScreenState extends State<IntroScreen> {
 
   Future<void> _fetch1() async {
     await Future.delayed(const Duration(seconds: 4));
-    await userController.setUserModel(
-      "다빈",
-      "https://cdn.pixabay.com/photo/2023/05/21/20/30/sky-8009386_1280.jpg",
-      "email",
-      "안녕하세요.. 소개글 테스트",
-      "MBTI 몰라요",
-      ["선호하는", "음식 종류", "테스트"],
-    );
+    if (await userController.isData()) {
+      userController.getUserData();
+      print("getUserData 실행");
+    } else {
+      userController.setUserModel(
+        "다빈",
+        "https://cdn.pixabay.com/photo/2023/05/21/20/30/sky-8009386_1280.jpg",
+        "email",
+        "안녕하세요.. 소개글 테스트",
+        "MBTI 몰라요",
+        [],
+      );
+
+      print("setUserModel 실행 : userData초기화");
+    }
+
     Navigator.pushReplacementNamed(context, "/home");
   }
 }

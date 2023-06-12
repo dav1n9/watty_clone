@@ -11,7 +11,8 @@ class SetMbtiScreen extends StatefulWidget {
 
 class _SetMbtiScreenState extends State<SetMbtiScreen> {
   final userController = Get.put(UserController());
-  late String select = userController.user['mbti'];
+  //late String select = userController.user['mbti'];
+  late String select = userController.newUser.value.mbti;
 
   @override
   void initState() {
