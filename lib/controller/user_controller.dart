@@ -47,13 +47,6 @@ class UserController extends GetxController {
     '디저트',
   ];
 
-  //RxMap user = {}.obs;
-
-  //RxString userName = "".obs;
-  //RxString userImg = "".obs;
-  //RxString userMail = "".obs;
-  //RxString userDesc = "".obs;
-  //RxString userMbti = "".obs;
   RxList selectedFoods = [].obs;
 
   Future<void> setUserModel(String name, String img, String mail, String desc,
@@ -66,9 +59,7 @@ class UserController extends GetxController {
       mbti: mbti,
       userDesc: desc,
     );
-
     print(newUser.toJson());
-    //print(newUser.toJson()['name']);
 
     await setUserData(newUser.value);
     setSelectedFoods();
@@ -142,10 +133,8 @@ class UserController extends GetxController {
   void updateFavorite() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     await getUserData();
-
     //user["favorite"] = selectedFoods;
     newUser.value.favorite = selectedFoods.cast();
-
     //pref.setString("user", json.encode(user.toJson()));
     pref.setString("user", json.encode(newUser.toJson()));
   }

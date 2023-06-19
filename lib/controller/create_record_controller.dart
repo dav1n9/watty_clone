@@ -79,17 +79,9 @@ class CreateRecordController extends GetxController {
 
   bool isSeleceted(int tagType, int index) {
     if (tagType == 0) {
-      if (kindOfFood[index]) {
-        return true;
-      } else {
-        return false;
-      }
+      return kindOfFood[index];
     } else if (tagType == 1) {
-      if (type[index]) {
-        return true;
-      } else {
-        return false;
-      }
+      return type[index];
     }
     return false;
   }

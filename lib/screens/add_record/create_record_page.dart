@@ -44,19 +44,6 @@ class _CreateRecordPageState extends State<CreateRecordPage> {
     super.dispose();
   }
 
-  // void pickImages() async {
-  // var requestStatus = await Permission.storage.request();
-  //var status = await Permission.photos.status;
-
-  //if (requestStatus.isGranted) {
-  //final images = await picker.pickMultiImage();
-  //setState(() {
-  // imgList = images;
-  //imgLength = images.length;
-  //});
-  // }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,8 +71,6 @@ class _CreateRecordPageState extends State<CreateRecordPage> {
                       builder: (context) => const WriteContentPage(),
                     ),
                   );
-
-                  // recordController.setImgList(imgList);
                 },
                 child: const Text(
                   '다음',
@@ -106,19 +91,15 @@ class _CreateRecordPageState extends State<CreateRecordPage> {
                   }),
               carouselController: buttonCarouselController,
               items: recordController.imgList.cast<XFile>().map((i) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: const BoxDecoration(color: Colors.amber),
-                      child: Image.file(
-                        height: 500,
-                        File(i.path),
-                        fit: BoxFit.cover,
-                      ),
-                    );
-                  },
+                return Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                  decoration: const BoxDecoration(color: Colors.amber),
+                  child: Image.file(
+                    height: 500,
+                    File(i.path),
+                    fit: BoxFit.cover,
+                  ),
                 );
               }).toList(),
             ),

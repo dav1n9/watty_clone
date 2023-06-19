@@ -28,7 +28,7 @@ class _RecordDetailsState extends State<RecordDetails> {
         floatingActionButton: IconButton(
           onPressed: () {
             setState(() {
-              isLiked ? isLiked = false : isLiked = true;
+              isLiked = !isLiked;
             });
           },
           icon: isLiked
@@ -51,19 +51,15 @@ class _RecordDetailsState extends State<RecordDetails> {
                   viewportFraction: 1,
                 ),
                 items: recordController.imgList.map((e) => e.path).map((i) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width,
-                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                        decoration: const BoxDecoration(color: Colors.amber),
-                        child: Image.file(
-                          File(i),
-                          height: 100,
-                          fit: BoxFit.cover,
-                        ),
-                      );
-                    },
+                  return Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                    decoration: const BoxDecoration(color: Colors.amber),
+                    child: Image.file(
+                      File(i),
+                      height: 100,
+                      fit: BoxFit.cover,
+                    ),
                   );
                 }).toList(),
               ),
@@ -84,7 +80,7 @@ class _RecordDetailsState extends State<RecordDetails> {
 
               // ..정보들...
               Container(
-                alignment: Alignment.bottomLeft,
+                // alignment: Alignment.bottomLeft,
                 padding: const EdgeInsets.all(18.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,17 +101,13 @@ class _RecordDetailsState extends State<RecordDetails> {
                     ),
                     Wrap(
                       spacing: 8.0,
-                      children: [
-                        for (int i = 0;
-                            i < recordController.selectedTag.length;
-                            i++) ...[
-                          Text(
-                            "#${recordController.selectedTag[i].toString()}",
-                            style: TextStyle(
-                                fontSize: 18, color: Colors.red.shade700),
-                          ),
-                        ],
-                      ],
+                      children: recordController.selectedTag.map((element) {
+                        return Text(
+                          "#${element.toString()}",
+                          style: TextStyle(
+                              fontSize: 18, color: Colors.red.shade700),
+                        );
+                      }).toList(),
                     ),
                   ],
                 ),

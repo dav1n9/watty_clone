@@ -76,11 +76,7 @@ class _SetFavoriteFoodScreenState extends State<SetFavoriteFoodScreen> {
             ),
             const SizedBox(height: 40),
             Wrap(
-              children: [
-                for (int i = 0; i < userController.food.length; i++) ...[
-                  foodBtn(userController.food[i]),
-                ],
-              ],
+              children: userController.food.map((e) => foodBtn(e)).toList(),
             ),
             Container(
               width: MediaQuery.of(context).size.width,

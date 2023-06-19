@@ -69,10 +69,7 @@ class _WriteContentPageState extends State<WriteContentPage>
               //controller: titleInputController,
               initialValue: recordController.place.value,
               onChanged: (value) {
-                setState(() {
-                  // 한글자 바뀔때마다 정보 updqte ?  비효율?
-                  recordController.setPlace(value);
-                });
+                recordController.setPlace(value);
               },
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
@@ -85,7 +82,6 @@ class _WriteContentPageState extends State<WriteContentPage>
               //controller: contentInputController,
               initialValue: recordController.desc.value,
               onChanged: (value) {
-                // 한글자 바뀔때마다 정보 updqte ?  비효율?
                 recordController.setDesc(value);
               },
               decoration: const InputDecoration(
@@ -125,17 +121,13 @@ class _WriteContentPageState extends State<WriteContentPage>
               title: const Text('종류 태그'),
               children: [
                 Wrap(
-                  children: [
-                    for (int i = 0;
-                        i < recordController.foodsTag.length;
-                        i++) ...[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child:
-                            clickedTagBtn(recordController.foodsTag[i], 0, i),
-                      ),
-                    ],
-                  ],
+                  children: recordController.foodsTag.map((e) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: clickedTagBtn(
+                          e, 0, recordController.foodsTag.indexOf(e)),
+                    );
+                  }).toList(),
                 ),
               ],
             ),
@@ -143,16 +135,15 @@ class _WriteContentPageState extends State<WriteContentPage>
               title: const Text('형태 태그'),
               children: [
                 Wrap(
-                  children: [
-                    for (int i = 0;
-                        i < recordController.typeTag.length;
-                        i++) ...[
-                      Padding(
+                  children: recordController.typeTag.map(
+                    (e) {
+                      return Container(
                         padding: const EdgeInsets.only(left: 15),
-                        child: clickedTagBtn(recordController.typeTag[i], 1, i),
-                      ),
-                    ],
-                  ],
+                        child: clickedTagBtn(
+                            e, 1, recordController.typeTag.indexOf(e)),
+                      );
+                    },
+                  ).toList(),
                 ),
               ],
             ),
@@ -161,14 +152,6 @@ class _WriteContentPageState extends State<WriteContentPage>
             ),
             ElevatedButton(
               onPressed: () {
-                // Get에 저장된 정보 보여주기
-                print(
-                    "Get - img : ${recordController.imgList.map((e) => e.path)}");
-                print("Get - Place : ${recordController.place}");
-                print("Get - Desc : ${recordController.desc}");
-                print("Get - Rating : ${recordController.rating}");
-                print(
-                    "Get - TagList : ${recordController.selectedTag.map((e) => e)}");
                 //model -> Json
                 recordController.setRecordModel();
 

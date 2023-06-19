@@ -21,102 +21,90 @@ class _BottomNaviState extends State<BottomNavi> {
     return BottomNavigationBar(
       onTap: (int index) {
         widget.onTap(index);
-        setState(() {
-          // + 아이콘 눌렀을 때 bottomsheet
-          if (index == 2) {
-            showModalBottomSheet(
-              context: context,
-              builder: (context) {
-                return SizedBox(
-                    height: 200,
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        SizedBox(
-                          width: double.infinity, // 가로 꽉차게 설정
-                          child: TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                GetPageRoute(
-                                    page: () => const CreateRecordPage()),
-                              );
-                            },
-                            child: const Column(
-                              children: [
-                                Text(
-                                  '내돈내먹🍽️',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black,
-                                  ),
+        // + 아이콘 눌렀을 때 bottomsheet
+        if (index == 2) {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return SizedBox(
+                  height: 200,
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: double.infinity, // 가로 꽉차게 설정
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              GetPageRoute(
+                                  page: () => const CreateRecordPage()),
+                            );
+                          },
+                          child: const Column(
+                            children: [
+                              Text(
+                                '내돈내먹🍽️',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black,
                                 ),
-                                Text(
-                                  '밖에서 사먹었어요',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey,
-                                  ),
-                                )
-                              ],
-                            ),
+                              ),
+                              Text(
+                                '밖에서 사먹었어요',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey,
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Divider(
-                          height: 1,
-                          thickness: 1,
-                          color: Color.fromARGB(120, 158, 158, 158),
-                        ),
-                        //  const SizedBox(
-                        //     height: 1,
-                        //     width: double.infinity,
-                        //    child: DecoratedBox(
-                        //      decoration: BoxDecoration(
-                        //        color: Color.fromARGB(120, 158, 158, 158),
-                        //      ),
-                        //    ),
-                        //  ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: TextButton(
-                            onPressed: () {},
-                            child: const Column(
-                              children: [
-                                Text(
-                                  '내가해먹🧑‍🍳',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.black,
-                                  ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      const Divider(
+                        height: 1,
+                        thickness: 1,
+                        color: Color.fromARGB(120, 158, 158, 158),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: TextButton(
+                          onPressed: () {},
+                          child: const Column(
+                            children: [
+                              Text(
+                                '내가해먹🧑‍🍳',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black,
                                 ),
-                                Text(
-                                  '집에서 만들어 먹었어요',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Colors.grey,
-                                  ),
-                                )
-                              ],
-                            ),
+                              ),
+                              Text(
+                                '집에서 만들어 먹었어요',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey,
+                                ),
+                              )
+                            ],
                           ),
                         ),
-                      ],
-                    ));
-              },
-            );
-          } else {
-            selectedIndex = index;
-          }
-        });
-        //print(selectedIndex);
+                      ),
+                    ],
+                  ));
+            },
+          );
+        } else {
+          selectedIndex = index;
+        }
         //Scaffold.of(context).showBottomSheet((context) => Container());
       },
       type: BottomNavigationBarType.fixed, // 애니메이션 없음

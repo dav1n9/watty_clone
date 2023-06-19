@@ -66,11 +66,7 @@ class _SetMbtiScreenState extends State<SetMbtiScreen> {
             ),
             const SizedBox(height: 40),
             Wrap(
-              children: [
-                for (int i = 0; i < userController.mbti.length; i++) ...[
-                  mbtiBtn(userController.mbti[i]),
-                ],
-              ],
+              children: userController.mbti.map((e) => mbtiBtn(e)).toList(),
             ),
             Container(
               width: MediaQuery.of(context).size.width,

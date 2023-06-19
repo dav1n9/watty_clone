@@ -113,20 +113,16 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                   ),
                   Obx(
                     () => Wrap(
-                      children: [
-                        for (int i = 0;
-                            i < userController.selectedFoods.length;
-                            i++) ...[
-                          OutlinedButton(
-                            onPressed: () {},
-                            style: OutlinedButton.styleFrom(),
-                            child: Text(
-                              '${userController.selectedFoods[i]}',
-                              style: TextStyle(color: Colors.red.shade700),
-                            ),
+                      children: userController.selectedFoods.map((element) {
+                        return OutlinedButton(
+                          onPressed: () {},
+                          style: OutlinedButton.styleFrom(),
+                          child: Text(
+                            '$element',
+                            style: TextStyle(color: Colors.red.shade700),
                           ),
-                        ],
-                      ],
+                        );
+                      }).toList(),
                     ),
                   ),
                 ],
