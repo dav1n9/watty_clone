@@ -1,16 +1,11 @@
 # watty_clone
 
-A new Flutter project.
+강원대학교「진로탐색을 위한 체험형 SW인턴십」참여
+
+[인턴십 진행 기업명] 컨플  
+[인턴십 기간] 2023 5월 1일(월) ~ 6월 30일(금) / 2달간   
+[업무 내용]
 
 ## Getting Started
 
 This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
