@@ -12,11 +12,24 @@ class SetFavoriteFoodScreen extends StatefulWidget {
 
 class _SetFavoriteFoodScreenState extends State<SetFavoriteFoodScreen> {
   final userController = Get.put(UserController());
+  late List<dynamic> updateFoods;
 
   @override
   void initState() {
-    userController.setSelectedFoods();
+    // updateFoods = List.empty();
+    updateFoods = userController.newUser.value.favorite;
+    print("initState: $updateFoods");
+    // setFood();
     super.initState();
+
+    setState(() {});
+  }
+
+  setFood() async {
+    await userController.setSelectedFoods();
+    updateFoods = userController.selectedFoods;
+
+    print("updateFoods: $updateFoods");
   }
 
   Widget foodBtn(String food) {
@@ -25,18 +38,24 @@ class _SetFavoriteFoodScreenState extends State<SetFavoriteFoodScreen> {
       child: ElevatedButton(
         onPressed: () {
           setState(() {
-            if (userController.selectedFoods.contains(food)) {
+            if (updateFoods.contains(food)) {
               //뺴기
-              userController.selectedFoods.remove(food);
+              updateFoods.remove(food);
               print("remove : $food");
+              // ??? updateFood수정하고 있는데
+              // 왜 컨트롤러 newUser favorite 리스트가 수정되는지 모르곘음...???
+              print(
+                  "remove - newUser.value.favorite: ${userController.newUser.value.favorite}");
             } else {
-              userController.selectedFoods.add(food);
-              print("add : $food");
+              updateFoods.add(food);
+              print("add food : $food");
+              print(
+                  "remove - newUser.value.favorite: ${userController.newUser.value.favorite}");
             }
           });
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: userController.selectedFoods.contains(food)
+          backgroundColor: updateFoods.contains(food)
               ? Colors.red.shade800
               : Colors.grey.shade200,
           elevation: 0,
@@ -44,9 +63,7 @@ class _SetFavoriteFoodScreenState extends State<SetFavoriteFoodScreen> {
         child: Text(
           food,
           style: TextStyle(
-            color: userController.selectedFoods.contains(food)
-                ? Colors.white
-                : Colors.black,
+            color: updateFoods.contains(food) ? Colors.white : Colors.black,
           ),
         ),
       ),
@@ -76,17 +93,23 @@ class _SetFavoriteFoodScreenState extends State<SetFavoriteFoodScreen> {
             ),
             const SizedBox(height: 40),
             Wrap(
-              children: userController.food.map((e) => foodBtn(e)).toList(),
+              children: userController.food.map((e) {
+                return foodBtn(e);
+              }).toList(),
             ),
             Container(
               width: MediaQuery.of(context).size.width,
               padding: const EdgeInsets.all(20),
               child: ElevatedButton(
                 onPressed: () {
-                  userController.updateFavorite();
-                  print(
-                      'Favorite food update! ${userController.selectedFoods}');
-                  Navigator.of(context).pop();
+                  setState(() async {
+                    await userController.updateFavorite();
+                    print(
+                        'Favorite food update! selectedFoods : ${userController.selectedFoods}');
+                    print('Favorite food update! updateFoods : $updateFoods');
+
+                    Navigator.of(context).pop();
+                  });
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.red.shade800,

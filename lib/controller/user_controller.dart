@@ -130,7 +130,7 @@ class UserController extends GetxController {
   }
 
   // favorite food 수정
-  void updateFavorite() async {
+  Future<void> updateFavorite() async {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     await getUserData();
     //user["favorite"] = selectedFoods;
@@ -145,10 +145,11 @@ class UserController extends GetxController {
     print("reset: ${pref.getString("user")}");
   }
 
-  void setSelectedFoods() async {
+  Future<void> setSelectedFoods() async {
     await getUserData();
 
     //selectedFoods.value = user['favorite'];
     selectedFoods.value = newUser.value.favorite;
+    print("setSelectedFoods : $selectedFoods");
   }
 }
